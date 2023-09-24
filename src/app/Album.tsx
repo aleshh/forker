@@ -1,5 +1,6 @@
 "use client"
 import Image from "next/image"
+import styles from "./Album.module.css"
 import { Album as AlbumType } from "./types"
 
 const baseUrl = "https://pitchfork.com"
@@ -12,33 +13,36 @@ export default function Album({ album: input }: { album: AlbumType }) {
     ?.map((artist) => artist.display_name)
     .join(" · ")
   const name = album?.display_name
-  const rating = rtg?.display_rating
+  const rating = rtg?.display_rating.replace(".0", "")
   const genres = genresEntity?.map((genre) => genre.display_name).join(", ")
   const albumImageUrl = album?.photos.tout.sizes.homepageLarge
 
   return (
-    <a href={baseUrl + url} target="_blank">
-      <div style={{ border: "1px solid lime" }}>
-        {albumImageUrl && (
-          <div style={{ position: "relative", width: 300, height: 300 }}>
-            <Image
-              src={albumImageUrl}
-              alt={`${artist}: ${name}`}
-              fill
-              // layout="fill"
-              objectFit="contain"
-              // width="320"
-              // height="320"
-            />
-          </div>
-        )}
+    <a href={baseUrl + url} target="_blank" className={styles.album}>
+      {albumImageUrl && (
+        <div className={styles.imageWrapper}>
+          <Image
+            src={albumImageUrl}
+            alt={`${artist}: ${name}`}
+            fill
+            // layout="fill"
+            objectFit="contain"
+            // width="320"
+            // height="320"
+          />
+        </div>
+      )}
+      <div className={styles.titleContainer}>
+        <div className={styles.rating}>{rating}</div>
         <h2>
-          {artist}: {name}
+          <span className={styles.artist}>{artist}</span>
+          <br />
+          <span className={styles.name}>{name}</span>
         </h2>
-        <p>
-          Rating: <strong>{rating}</strong> Genres: <strong>{genres}</strong>
-        </p>
       </div>
+      <p>
+        <strong>{genres}</strong>
+      </p>
     </a>
   )
 }

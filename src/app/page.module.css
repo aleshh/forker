@@ -17,3 +17,11 @@
   z-index: 2;
   font-family: var(--font-mono); */
 }
+
+.albumContainer {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  background-color: beige;
+}

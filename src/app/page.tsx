@@ -34,8 +34,8 @@ export default function Home() {
   }
 
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
+    <main>
+      <div className={styles.albumContainer}>
         {albums.map((album) => (
           <Album key={album.id} album={album} />
         ))}

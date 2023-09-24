@@ -1,0 +1,61 @@
+.album {
+  display: block;
+  border: 0.5px solid #888;
+  border-radius: 3px;
+  color: black;
+  background-color: white;
+  padding: 20px;
+  text-decoration: none;
+  flex-basis: 300px;
+  flex-shrink: 1;
+  /* flex-grow: 0; */
+  /* text-align: center; */
+  z-index: 1;
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0);
+
+  transition: box-shadow 1s;
+}
+
+.album:hover {
+  box-shadow: 0 0 100px rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin-bottom: 10px;
+}
+
+.titleContainer {
+  display: flex;
+}
+.rating {
+  border: 3px solid black;
+  flex-basis: 50px;
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  padding-top: 12px;
+  line-height: 20px;
+  font-size: 20px;
+  font-weight: 800;
+  text-align: center;
+  margin-right: 12px;
+}
+
+.album h2 {
+  margin-bottom: 10px;
+  flex-shrink: 1;
+}
+
+.artist {
+  font-size: 20px;
+}
+
+.name {
+  font-weight: normal;
+  font-style: italic;
+}
