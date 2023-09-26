@@ -6,6 +6,7 @@
   color: black;
   background-color: rgb(250, 250, 250);
   padding: 20px;
+  padding-bottom: 36px;
   text-decoration: none;
   box-shadow: 0 0 0 rgba(0, 0, 0, 0);
   transition: all 0.25s;
@@ -26,7 +27,9 @@
 
 .titleContainer {
   display: flex;
+  margin-bottom: 10px;
 }
+
 .rating {
   top: 6px;
   position: relative;
@@ -50,13 +53,9 @@
   color: rgb(222, 0, 0);
 }
 
-.album h2 {
-  margin-bottom: 10px;
-  flex-shrink: 1;
-}
-
 .artist {
   font-size: 20px;
+  margin-bottom: 3px;
 }
 
 .name {
@@ -64,19 +63,20 @@
   font-style: italic;
 }
 
-/* .genreWrapper {
+.genreWrapper {
   position: absolute;
-  bottom: 20;
-} */
+  bottom: 18px;
+}
 
 .genre {
   background: black;
   color: white;
   border-radius: 1rem;
-  padding: 2px 8px;
+  padding: 2px 7px;
   font-family: system-ui, sans-serif;
   font-size: 11px;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: 0.3px;
   margin-right: 0.25rem;
 }

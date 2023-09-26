@@ -22,26 +22,20 @@ export default function Album({ album: input }: { album: AlbumType }) {
     <a href={baseUrl + url} target="_blank" className={styles.album}>
       {albumImageUrl && (
         <div className={styles.imageWrapper}>
-          <Image
-            src={albumImageUrl}
-            alt={`${artist}: ${name}`}
-            fill
-            // layout="fill"
-            objectFit="contain"
-            // width="320"
-            // height="320"
-          />
+          <Image src={albumImageUrl} alt={`${artist}: ${name}`} fill />
         </div>
       )}
       <div className={styles.titleContainer}>
-        <div className={`${styles.rating} ${isBest ? styles.bestNew : ""}`}>
+        <div
+          aria-label="rating"
+          className={`${styles.rating} ${isBest ? styles.bestNew : ""}`}
+        >
           {rating}
         </div>
-        <h2>
-          <span className={styles.artist}>{artist}</span>
-          <br />
-          <span className={styles.name}>{name}</span>
-        </h2>
+        <div>
+          <h3 className={styles.artist}>{artist}</h3>
+          <h2 className={styles.name}>{name}</h2>
+        </div>
       </div>
       <p className={styles.genreWrapper}>
         {genres?.map((genre) => (
