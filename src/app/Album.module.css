@@ -12,17 +12,12 @@
   transition: all 0.25s;
 }
 
-.album:hover {
-  transform: scale(1.01);
-  background-color: rgb(255, 255, 255);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-}
-
 .imageWrapper {
   position: relative;
   width: 100%;
   aspect-ratio: 1;
   margin-bottom: 10px;
+  display: block;
 }
 
 .titleContainer {

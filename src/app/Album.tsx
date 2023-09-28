@@ -9,21 +9,24 @@ export default function Album({ album: input }: { album: AlbumType }) {
   const { tombstone, genres: genresEntity, url } = input
   const { albums, bnm, bnr } = tombstone
   const { album, rating: rtg } = albums?.[0] || {}
-  const artist = album?.artists
-    ?.map((artist) => artist.display_name)
-    .join(" · ")
+  const { artists } = album || {}
   const name = album?.display_name
   const rating = rtg?.display_rating.replace(".0", "")
   const genres = genresEntity?.map((genre) => genre.display_name)
   const albumImageUrl = album?.photos.tout.sizes.homepageLarge
   const isBest = bnm || bnr
+  const albumUrl = baseUrl + url
 
   return (
-    <a href={baseUrl + url} target="_blank" className={styles.album}>
+    <article className={styles.album}>
       {albumImageUrl && (
-        <div className={styles.imageWrapper}>
-          <Image src={albumImageUrl} alt={`${artist}: ${name}`} fill />
-        </div>
+        <a className={styles.imageWrapper} href={albumUrl}>
+          <Image
+            src={albumImageUrl}
+            alt={`${artists?.join(", ")}: ${name}`}
+            fill
+          />
+        </a>
       )}
       <div className={styles.titleContainer}>
         <div
@@ -33,8 +36,19 @@ export default function Album({ album: input }: { album: AlbumType }) {
           {rating}
         </div>
         <div>
-          <h3 className={styles.artist}>{artist}</h3>
-          <h2 className={styles.name}>{name}</h2>
+          <h3 className={styles.artist}>
+            {artists?.map((artist, index, array) => (
+              <>
+                <a key={artist.id} href={`${baseUrl}${artist.url}`}>
+                  {artist.display_name}
+                </a>
+                {array.length - 1 !== index && " · "}
+              </>
+            ))}
+          </h3>
+          <h2 className={styles.name}>
+            <a href={albumUrl}>{name}</a>
+          </h2>
         </div>
       </div>
       <p className={styles.genreWrapper}>
@@ -44,6 +58,6 @@ export default function Album({ album: input }: { album: AlbumType }) {
           </span>
         ))}
       </p>
-    </a>
+    </article>
   )
 }
