@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import Image from "next/image"
 import styles from "./page.module.css"
 import Album from "./Album"
+import Loader from "./Loader"
 import devAlbums from "../../dev-albums"
 import { Album as AlbumType } from "./types"
 
@@ -30,7 +31,7 @@ export default function Home() {
   }, [])
 
   if (!albums) {
-    return <div>Loading...</div>
+    return <Loader />
   }
 
   return (

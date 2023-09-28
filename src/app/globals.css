@@ -5,6 +5,10 @@
   font-family: Optima, Candara, "Noto Sans", source-sans-pro, sans-serif;
 }
 
+body {
+  background-color: rgb(236, 236, 236);
+}
+
 a {
   color: black;
   text-decoration: none;

@@ -4,5 +4,4 @@
   gap: 20px;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   justify-items: stretch;
-  background-color: rgb(236, 236, 236);
 }
