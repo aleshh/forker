@@ -2,8 +2,18 @@
 import Image from "next/image"
 import styles from "./Album.module.css"
 import { Album as AlbumType } from "./types"
+import copyToClipboard from "./utils/copyToClipboard"
 
 const baseUrl = "https://pitchfork.com"
+
+function kebabCase(string: string | undefined): string {
+  if (!string) return ""
+  return string
+    .toLowerCase()
+    .replace(/[.,\/#!$%\^&\*;:{}=\-_'’`~()]/g, "")
+    .replace(/ ep$/, "")
+    .replaceAll(" ", "-")
+}
 
 export default function Album({ album: input }: { album: AlbumType }) {
   const { tombstone, genres: genresEntity, url } = input
@@ -16,6 +26,18 @@ export default function Album({ album: input }: { album: AlbumType }) {
   const albumImageUrl = album?.photos.tout.sizes.homepageLarge
   const isBest = bnm || bnr
   const albumUrl = baseUrl + url
+  const songWhipLink = `https://songwhip.com/${kebabCase(
+    artists?.[0]?.display_name
+  )}/${kebabCase(name)}`
+
+  // async function openInSpotify() {
+  //   const response = await fetch(
+  //     `https://songwhip.com/api/songwhip/search?q=${artists?.[0]} ${name}&country=US&limit=1`
+  //   )
+  //   const json = await response.json()
+  //   const album = json.results.albums[0].sourceUrl
+  //   console.log(album)
+  // }
 
   return (
     <article className={styles.album}>
@@ -57,6 +79,17 @@ export default function Album({ album: input }: { album: AlbumType }) {
             {genre}
           </span>
         ))}
+        <a href={songWhipLink} style={{ marginLeft: 20 }}>
+          OPEN
+        </a>
+        <a
+          onClick={() =>
+            copyToClipboard(`${artists?.[0]?.display_name} ${name}`)
+          }
+          style={{ marginLeft: 20 }}
+        >
+          COPY
+        </a>
       </p>
     </article>
   )
