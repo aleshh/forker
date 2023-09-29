@@ -51,13 +51,7 @@ export default function Album({ album: input }: { album: AlbumType }) {
         </a>
       )}
       <div className={styles.titleContainer}>
-        <div
-          aria-label="rating"
-          className={`${styles.rating} ${isBest ? styles.bestNew : ""}`}
-        >
-          {rating}
-        </div>
-        <div>
+        <div className={styles.title}>
           <h3 className={styles.artist}>
             {artists?.map((artist, index, array) => (
               <span key={artist.id}>
@@ -69,6 +63,12 @@ export default function Album({ album: input }: { album: AlbumType }) {
           <h2 className={styles.name}>
             <a href={albumUrl}>{name}</a>
           </h2>
+        </div>
+        <div
+          aria-label="rating"
+          className={`${styles.rating} ${isBest ? styles.bestNew : ""}`}
+        >
+          {rating}
         </div>
       </div>
       <p className={styles.genreWrapper}>
