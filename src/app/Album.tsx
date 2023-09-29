@@ -60,12 +60,10 @@ export default function Album({ album: input }: { album: AlbumType }) {
         <div>
           <h3 className={styles.artist}>
             {artists?.map((artist, index, array) => (
-              <>
-                <a key={artist.id} href={`${baseUrl}${artist.url}`}>
-                  {artist.display_name}
-                </a>
+              <span key={artist.id}>
+                <a href={`${baseUrl}${artist.url}`}>{artist.display_name}</a>
                 {array.length - 1 !== index && " · "}
-              </>
+              </span>
             ))}
           </h3>
           <h2 className={styles.name}>

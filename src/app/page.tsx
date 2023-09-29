@@ -8,7 +8,7 @@ import Loader from "./Loader"
 import devAlbums from "../../dev-albums"
 import { Album as AlbumType } from "./types"
 
-const dev = true
+const dev = process.env.NODE_ENV === "development"
 
 export default function Home() {
   const [albums, setAlbums] = useState<null | AlbumType[]>(null)
@@ -25,7 +25,6 @@ export default function Home() {
       )
       const json = await response.json()
       const { list } = json.results
-      console.log(list[0])
       setAlbums(list)
     })()
   }, [])
