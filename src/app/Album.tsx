@@ -42,7 +42,7 @@ export default function Album({ album: input }: { album: AlbumType }) {
   return (
     <article className={styles.album}>
       {albumImageUrl && (
-        <a className={styles.imageWrapper} href={albumUrl}>
+        <a target="_blank" className={styles.imageWrapper} href={albumUrl}>
           <Image
             src={albumImageUrl}
             alt={`${artists?.join(", ")}: ${name}`}
@@ -55,7 +55,9 @@ export default function Album({ album: input }: { album: AlbumType }) {
           <h3 className={styles.artist}>
             {artists?.map((artist, index, array) => (
               <span key={artist.id}>
-                <a href={`${baseUrl}${artist.url}`}>{artist.display_name}</a>
+                <a target="_blank" href={`${baseUrl}${artist.url}`}>
+                  {artist.display_name}
+                </a>
                 {array.length - 1 !== index && " · "}
               </span>
             ))}
@@ -71,24 +73,28 @@ export default function Album({ album: input }: { album: AlbumType }) {
           {rating}
         </div>
       </div>
-      <p className={styles.genreWrapper}>
-        {genres?.map((genre) => (
-          <span key={genre} className={styles.genre}>
-            {genre}
-          </span>
-        ))}
-        <a href={songWhipLink} style={{ marginLeft: 20 }}>
-          OPEN
-        </a>
-        <a
-          onClick={() =>
-            copyToClipboard(`${artists?.[0]?.display_name} ${name}`)
-          }
-          style={{ marginLeft: 20 }}
-        >
-          COPY
-        </a>
-      </p>
+      <footer>
+        <div className={styles.genreWrapper}>
+          {genres?.map((genre) => (
+            <span key={genre} className={styles.genre}>
+              {genre}
+            </span>
+          ))}
+        </div>
+        <div className={styles.buttonContainer}>
+          <a className={styles.button} target="_blank" href={songWhipLink}>
+            OPEN
+          </a>
+          <button
+            className={styles.button}
+            onClick={() =>
+              copyToClipboard(`${artists?.[0]?.display_name} ${name}`)
+            }
+          >
+            COPY
+          </button>
+        </div>
+      </footer>
     </article>
   )
 }
