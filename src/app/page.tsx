@@ -5,7 +5,7 @@ import Image from "next/image"
 import styles from "./page.module.css"
 import Album from "./Album"
 import Loader from "./Loader"
-// import devAlbums from "../../dev-albums"
+import devAlbums from "../../dev-albums"
 import { Album as AlbumType } from "./types"
 
 const dev = process.env.NODE_ENV === "development"
@@ -15,7 +15,7 @@ export default function Home() {
 
   useEffect(function loadAlbums() {
     if (dev) {
-      setAlbums(require("../../dev-albums").default)
+      setAlbums(devAlbums)
       return
     }
 
