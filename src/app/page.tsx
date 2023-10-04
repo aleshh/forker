@@ -7,34 +7,57 @@ import Album from "./Album"
 import Loader from "./Loader"
 import devAlbums from "../../dev-albums"
 import { Album as AlbumType } from "./types"
-import usePageVisibility from "./utils/usePageVisibility"
 import useShouldReset from "./utils/useShouldReset"
 
 const dev = process.env.NODE_ENV === "development"
-const list: String[] = []
 
 export default function Home() {
   const [albums, setAlbums] = useState<null | AlbumType[]>(null)
-  // const [list, setList] = useState([])
-  const visibility = usePageVisibility()
+  const [error, setError] = useState("")
   const shouldReset = useShouldReset()
-  list.push(visibility)
 
-  useEffect(function loadAlbums() {
-    if (dev) {
-      setAlbums(devAlbums)
-      return
-    }
+  useEffect(
+    function loadAlbums() {
+      if (dev) {
+        setAlbums(devAlbums)
+        return
+      }
 
-    const albums = (async function () {
-      const response = await fetch(
-        "https://pitchfork.com/api/v2/search/?types=reviews&hierarchy=sections%2Freviews%2Falbums%2Cchannels%2Freviews%2Falbums&sort=publishdate%20desc%2Cposition%20asc&size=200&start=0"
-      )
-      const json = await response.json()
-      const { list } = json.results
-      setAlbums(list)
-    })()
-  }, [])
+      if (albums && !shouldReset) return
+
+      console.log("fetching")
+
+      const controller = new AbortController()
+      const fetchOptions = { signal: controller.signal }
+
+      try {
+        const albums = (async function () {
+          const response = await fetch(
+            "https://pitchfork.com/api/v2/search/?types=reviews&hierarchy=sections%2Freviews%2Falbums%2Cchannels%2Freviews%2Falbums&sort=publishdate%20desc%2Cposition%20asc&size=200&start=0",
+            fetchOptions
+          )
+          const json = await response.json()
+          const { list } = json.results
+          setAlbums(list)
+        })()
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message)
+        } else {
+          setError("unknown error")
+        }
+      }
+
+      // return function () {
+      //   controller.abort()
+      // }
+    },
+    [albums, shouldReset]
+  )
+
+  if (error) {
+    return `Error: ${error}`
+  }
 
   if (!albums) {
     return <Loader />
@@ -42,9 +65,6 @@ export default function Home() {
 
   return (
     <main>
-      {list.map((state, i) => (
-        <div key={i}>{state}</div>
-      ))}
       <div className={styles.albumContainer}>
         {albums.map((album) => (
           <Album key={album.id} album={album} />
