@@ -7,11 +7,18 @@ import Album from "./Album"
 import Loader from "./Loader"
 import devAlbums from "../../dev-albums"
 import { Album as AlbumType } from "./types"
+import usePageVisibility from "./utils/usePageVisibility"
+import useShouldReset from "./utils/useShouldReset"
 
 const dev = process.env.NODE_ENV === "development"
+const list: String[] = []
 
 export default function Home() {
   const [albums, setAlbums] = useState<null | AlbumType[]>(null)
+  // const [list, setList] = useState([])
+  const visibility = usePageVisibility()
+  const shouldReset = useShouldReset()
+  list.push(visibility)
 
   useEffect(function loadAlbums() {
     if (dev) {
@@ -35,6 +42,9 @@ export default function Home() {
 
   return (
     <main>
+      {list.map((state, i) => (
+        <div key={i}>{state}</div>
+      ))}
       <div className={styles.albumContainer}>
         {albums.map((album) => (
           <Album key={album.id} album={album} />
