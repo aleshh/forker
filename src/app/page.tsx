@@ -25,8 +25,6 @@ export default function Home() {
 
       if (albums && !shouldReset) return
 
-      console.log("fetching")
-
       const controller = new AbortController()
       const fetchOptions = { signal: controller.signal }
 
