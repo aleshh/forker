@@ -1,5 +1,6 @@
 "use client"
 import Image from "next/image"
+import { FiShare, FiCopy } from "react-icons/fi"
 import styles from "./Album.module.css"
 import { Album as AlbumType } from "./types"
 import copyToClipboard from "./utils/copyToClipboard"
@@ -82,17 +83,17 @@ export default function Album({ album: input }: { album: AlbumType }) {
           ))}
         </div>
         <div className={styles.buttonContainer}>
-          <a className={styles.button} target="_blank" href={songWhipLink}>
-            OPEN
-          </a>
           <button
             className={styles.button}
             onClick={() =>
               copyToClipboard(`${artists?.[0]?.display_name} ${name}`)
             }
           >
-            COPY
+            <FiCopy />
           </button>
+          <a className={styles.button} target="_blank" href={songWhipLink}>
+            <FiShare />
+          </a>
         </div>
       </footer>
     </article>

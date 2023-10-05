@@ -1,3 +1,21 @@
+# Forker
+
+Really just a duplicate of the [Pitchfork latest album reviews page](https://pitchfork.com/reviews/albums/), and in fact the links point to their reviews. The benefit is that this shows the reviews on list view.
+
+## Features
+
+- Copy button copies artist and title to clipboard for searching in music player
+- Open button attempts to open the SongWhip page for the album. As SongWhip's URIs are unpredictable, this does not work consistently.
+- Artist name links directly to Pitchfork artist page.
+- When returning to an open tab on a subsequent day, we attempt to detect this and automatically re-load results.
+
+## Roadmap
+
+- Filtering by rating and genre
+- Clicking artist name returns that artist's reviews inside the app
+- Server-side functionality to more consistently open albums in Spotify or other
+- Maybe an I'm feeling lucky feature to show a random album based on filter criteria
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
