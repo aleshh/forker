@@ -7,14 +7,18 @@ import Album from "./Album"
 import Loader from "./Loader"
 import devAlbums from "../../dev-albums"
 import { Album as AlbumType } from "./types"
-import useShouldReset from "./utils/useShouldReset"
 
 const dev = process.env.NODE_ENV === "development"
+
+function getCurrentDate() {
+  const d = new Date()
+  return `${d.getFullYear()} ${d.getMonth()} ${d.getDate()}`
+}
 
 export default function Home() {
   const [albums, setAlbums] = useState<null | AlbumType[]>(null)
   const [error, setError] = useState("")
-  const shouldReset = useShouldReset()
+  const [date, setDate] = useState(getCurrentDate())
 
   useEffect(
     function loadAlbums() {
@@ -23,34 +27,37 @@ export default function Home() {
         return
       }
 
-      if (albums && !shouldReset) return
-
-      const controller = new AbortController()
-      const fetchOptions = { signal: controller.signal }
-
-      try {
-        const albums = (async function () {
-          const response = await fetch(
-            "https://pitchfork.com/api/v2/search/?types=reviews&hierarchy=sections%2Freviews%2Falbums%2Cchannels%2Freviews%2Falbums&sort=publishdate%20desc%2Cposition%20asc&size=200&start=0",
-            fetchOptions
-          )
-          const json = await response.json()
-          const { list } = json.results
-          setAlbums(list)
-        })()
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message)
-        } else {
-          setError("unknown error")
+      function fetchData() {
+        try {
+          const albums = (async function () {
+            const response = await fetch(
+              "https://pitchfork.com/api/v2/search/?types=reviews&hierarchy=sections%2Freviews%2Falbums%2Cchannels%2Freviews%2Falbums&sort=publishdate%20desc%2Cposition%20asc&size=200&start=0"
+            )
+            const json = await response.json()
+            const { list } = json.results
+            setAlbums(list)
+          })()
+        } catch (err) {
+          if (err instanceof Error) {
+            setError(err.message)
+          } else {
+            setError("unknown error")
+          }
         }
       }
 
-      // return function () {
-      //   controller.abort()
-      // }
+      fetchData()
+
+      const intervalId = setInterval(() => {
+        if (getCurrentDate() !== date) {
+          fetchData()
+          setDate(getCurrentDate())
+        }
+      }, 1000)
+
+      return () => clearInterval(intervalId)
     },
-    [albums, shouldReset]
+    [date]
   )
 
   if (error) {
