@@ -56,9 +56,7 @@ export default function Album({ album: input }: { album: AlbumType }) {
           <h3 className={styles.artist}>
             {artists?.map((artist, index, array) => (
               <span key={artist.id}>
-                <a target="_blank" href={`${baseUrl}${artist.url}`}>
-                  {artist.display_name}
-                </a>
+                <a href={artist.url}>{artist.display_name}</a>
                 {array.length - 1 !== index && " · "}
               </span>
             ))}
