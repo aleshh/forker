@@ -1,3 +1,3 @@
-export default function Artist() {
-  return <h1>Artist ?</h1>
+export default function Artist({ params }: { params: { id: string } }) {
+  return <h1>Artist: {params.id}</h1>
 }

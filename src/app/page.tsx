@@ -1,9 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Image from "next/image"
-import styles from "./page.module.css"
-import Album from "./Album"
+import Albums from "./components/Albums"
 import Loader from "./Loader"
 import devAlbums from "../../dev-albums"
 import { Album as AlbumType } from "./types"
@@ -68,13 +66,5 @@ export default function Home() {
     return <Loader />
   }
 
-  return (
-    <main>
-      <div className={styles.albumContainer}>
-        {albums.map((album) => (
-          <Album key={album.id} album={album} />
-        ))}
-      </div>
-    </main>
-  )
+  return <Albums albums={albums} />
 }

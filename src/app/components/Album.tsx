@@ -2,8 +2,8 @@
 import Image from "next/image"
 import { FiShare, FiCopy } from "react-icons/fi"
 import styles from "./Album.module.css"
-import { Album as AlbumType } from "./types"
-import copyToClipboard from "./utils/copyToClipboard"
+import { Album as AlbumType } from "../types"
+import copyToClipboard from "../utils/copyToClipboard"
 
 const baseUrl = "https://pitchfork.com"
 
