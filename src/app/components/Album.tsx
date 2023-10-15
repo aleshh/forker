@@ -1,4 +1,3 @@
-"use client"
 import Image from "next/image"
 import { FiShare, FiCopy } from "react-icons/fi"
 import styles from "./Album.module.css"
@@ -16,7 +15,7 @@ function kebabCase(string: string | undefined): string {
     .replaceAll(" ", "-")
 }
 
-export default function Album({ album: input }: { album: AlbumType }) {
+export default async function Album({ album: input }: { album: AlbumType }) {
   const { tombstone, genres: genresEntity, url } = input
   const { albums, bnm, bnr } = tombstone
   const { album, rating: rtg } = albums?.[0] || {}
@@ -56,13 +55,7 @@ export default function Album({ album: input }: { album: AlbumType }) {
           <h3 className={styles.artist}>
             {artists?.map((artist, index, array) => (
               <span key={artist.id}>
-                <a
-                  href={`/artists/${artist.display_name
-                    .toLowerCase()
-                    .replaceAll(" ", "-")}`}
-                >
-                  {artist.display_name}
-                </a>
+                <a href={artist.url}>{artist.display_name}</a>
                 {array.length - 1 !== index && " · "}
               </span>
             ))}
@@ -81,9 +74,12 @@ export default function Album({ album: input }: { album: AlbumType }) {
       <footer>
         <div className={styles.genreWrapper}>
           {genres?.map((genre) => (
-            <span key={genre} className={styles.genre}>
-              {genre}
-            </span>
+            <a
+              key={genre}
+              href={`/genres/${genre.toLowerCase().replaceAll("/", "-")}`}
+            >
+              <span className={styles.genre}>{genre}</span>
+            </a>
           ))}
         </div>
         <div className={styles.buttonContainer}>
