@@ -17,7 +17,7 @@ function titleCase(str: string): string {
 }
 
 export default function Header() {
-  const path = window.location.pathname
+  const path = window?.location?.pathname
     .split("/")
     .filter((item) => item.length > 0)
     .map(restoreSpaces)
