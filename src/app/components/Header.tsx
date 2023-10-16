@@ -16,12 +16,13 @@ function titleCase(str: string): string {
     .join(" ")
 }
 function getLocationString(): undefined | string[] {
-  if (!window) return
-  return window?.location?.pathname
-    .split("/")
-    .filter((item) => item.length > 0)
-    .map(restoreSpaces)
-    .map(titleCase)
+  if (typeof window === "undefined") return
+  // return window?.location?.pathname
+  //   .split("/")
+  //   .filter((item) => item.length > 0)
+  //   .map(restoreSpaces)
+  //   .map(titleCase)
+  return undefined
 }
 
 export default function Header() {
