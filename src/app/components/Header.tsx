@@ -15,15 +15,20 @@ function titleCase(str: string): string {
     })
     .join(" ")
 }
-
-export default function Header() {
-  const path = window?.location?.pathname
+function getLocationString(): undefined | string[] {
+  if (!window) return
+  return window?.location?.pathname
     .split("/")
     .filter((item) => item.length > 0)
     .map(restoreSpaces)
     .map(titleCase)
+}
 
-  const location = path.length > 0 ? ` > ${path.join(" > ")}` : ""
+export default function Header() {
+  const path = getLocationString()
+
+  const location =
+    path && path.length && path.length > 0 ? ` > ${path.join(" > ")}` : ""
 
   return (
     <nav className={styles.wrapper}>
