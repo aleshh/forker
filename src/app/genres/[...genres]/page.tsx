@@ -1,4 +1,10 @@
 import Albums from "../../components/Albums"
+import Header from "../../components/Header"
+
+function getGenreName({ genres }: { genres: any }, genreToFind: string) {
+  const genre = genres?.find((g) => g.slug === genreToFind)
+  return genre.display_name
+}
 
 export default async function Genres({
   params,
@@ -15,5 +21,12 @@ export default async function Genres({
   const json = await response.json()
   const albums = json.results.list
 
-  return <Albums albums={albums} />
+  const genreName = getGenreName(albums[0], params.genres[0])
+
+  return (
+    <>
+      <Header text={`> Genre > ${genreName}`} />
+      <Albums albums={albums} />
+    </>
+  )
 }

@@ -15,6 +15,13 @@ function kebabCase(string: string | undefined): string {
     .replaceAll(" ", "-")
 }
 
+function getGenreUrl(genre: string): string {
+  const lowercase = genre.toLowerCase().replaceAll("/", "-")
+  const index = lowercase.indexOf("-")
+  if (index === -1) return lowercase
+  return lowercase.substring(0, index)
+}
+
 export default async function Album({ album: input }: { album: AlbumType }) {
   const { tombstone, genres: genresEntity, url } = input
   const { albums, bnm, bnr } = tombstone
@@ -74,10 +81,7 @@ export default async function Album({ album: input }: { album: AlbumType }) {
       <footer>
         <div className={styles.genreWrapper}>
           {genres?.map((genre) => (
-            <a
-              key={genre}
-              href={`/genres/${genre.toLowerCase().replaceAll("/", "-")}`}
-            >
+            <a key={genre} href={`/genres/${getGenreUrl(genre)}`}>
               <span className={styles.genre}>{genre}</span>
             </a>
           ))}

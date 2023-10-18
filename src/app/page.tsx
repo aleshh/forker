@@ -1,7 +1,6 @@
 import Albums from "./components/Albums"
-import Loader from "./loading"
 import devAlbums from "../../dev-albums"
-import { Album as AlbumType } from "./types"
+import Header from "./components/Header"
 
 const dev = process.env.NODE_ENV === "development"
 
@@ -23,5 +22,10 @@ export default async function Home() {
     return json.results.list
   })()
 
-  return <Albums albums={albums} />
+  return (
+    <>
+      <Header />
+      <Albums albums={albums} />
+    </>
+  )
 }
