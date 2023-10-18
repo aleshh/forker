@@ -2,7 +2,7 @@ import Albums from "../../components/Albums"
 import Header from "../../components/Header"
 
 function getGenreName({ genres }: { genres: any }, genreToFind: string) {
-  const genre = genres?.find((g) => g.slug === genreToFind)
+  const genre = genres?.find((g: any) => g.slug === genreToFind)
   return genre.display_name
 }
 

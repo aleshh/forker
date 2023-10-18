@@ -3,7 +3,7 @@ import Header from "../../components/Header"
 
 function getArtistName(album: any, artistToFind: string) {
   const artist = album.artists.find(
-    (a) => a.url === `/artists/${artistToFind}/`
+    (a: any) => a.url === `/artists/${artistToFind}/`
   )
   return artist.display_name
 }
