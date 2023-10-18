@@ -1,7 +1,7 @@
 import Albums from "../../components/Albums"
 import Header from "../../components/Header"
 
-function getArtistName(album, artistToFind: string) {
+function getArtistName(album: any, artistToFind: string) {
   const artist = album.artists.find(
     (a) => a.url === `/artists/${artistToFind}/`
   )
