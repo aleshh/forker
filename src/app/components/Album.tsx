@@ -1,3 +1,5 @@
+"use client"
+import { useState } from "react"
 import Image from "next/image"
 import { FiShare, FiCopy } from "react-icons/fi"
 import styles from "./Album.module.css"
@@ -22,7 +24,8 @@ function getGenreUrl(genre: string): string {
   return lowercase.substring(0, index)
 }
 
-export default async function Album({ album: input }: { album: AlbumType }) {
+export default function Album({ album: input }: { album: AlbumType }) {
+  const [isHovered, setHovered] = useState(false)
   const { tombstone, genres: genresEntity, url } = input
   const { albums, bnm, bnr } = tombstone
   const { album, rating: rtg } = albums?.[0] || {}
@@ -49,7 +52,13 @@ export default async function Album({ album: input }: { album: AlbumType }) {
   return (
     <article className={styles.album}>
       {albumImageUrl && (
-        <a target="_blank" className={styles.imageWrapper} href={albumUrl}>
+        <a
+          target="_blank"
+          className={styles.imageWrapper}
+          href={albumUrl}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+        >
           <Image
             src={albumImageUrl}
             alt={`${artists?.join(", ")}: ${name}`}
@@ -67,7 +76,7 @@ export default async function Album({ album: input }: { album: AlbumType }) {
               </span>
             ))}
           </h3>
-          <h2 className={styles.name}>
+          <h2 className={isHovered ? styles.nameUnderlined : styles.name}>
             <a href={albumUrl}>{name}</a>
           </h2>
         </div>
@@ -81,8 +90,12 @@ export default async function Album({ album: input }: { album: AlbumType }) {
       <footer>
         <div className={styles.genreWrapper}>
           {genres?.map((genre) => (
-            <a key={genre} href={`/genres/${getGenreUrl(genre)}`}>
-              <span className={styles.genre}>{genre}</span>
+            <a
+              key={genre}
+              href={`/genres/${getGenreUrl(genre)}`}
+              className={styles.genre}
+            >
+              {genre}
             </a>
           ))}
         </div>
