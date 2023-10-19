@@ -24,11 +24,17 @@ function getGenreUrl(genre: string): string {
   return lowercase.substring(0, index)
 }
 
-export default function Album({ album: input }: { album: AlbumType }) {
+export default function Album({
+  album: input,
+  showYear,
+}: {
+  album: AlbumType
+  showYear: boolean
+}) {
   const [isHovered, setHovered] = useState(false)
   const { tombstone, genres: genresEntity, url } = input
   const { albums, bnm, bnr } = tombstone
-  const { album, rating: rtg } = albums?.[0] || {}
+  const { album, rating: rtg, labels_and_years } = albums?.[0] || {}
   const { artists } = album || {}
   const name = album?.display_name
   const rating = rtg?.display_rating.replace(".0", "")
@@ -79,6 +85,14 @@ export default function Album({ album: input }: { album: AlbumType }) {
           <h2 className={isHovered ? styles.nameUnderlined : styles.name}>
             <a href={albumUrl}>{name}</a>
           </h2>
+          {showYear && (
+            <div>
+              {album?.release_year}
+              {labels_and_years?.map((item) =>
+                item.year === album?.release_year ? "" : ` (${item.year})`
+              )}
+            </div>
+          )}
         </div>
         <div
           aria-label="rating"
