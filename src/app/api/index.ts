@@ -1,10 +1,11 @@
 import devAlbums from "../../../dev-albums"
+import { Album } from "../types"
 
 const dev = process.env.NODE_ENV === "development"
 
 const baseUrl = "https://pitchfork.com/api/v2/"
 
-export async function getRecentReviews() {
+export async function getRecentReviews(): Promise<Album[]> {
   if (dev) {
     return devAlbums
   }
@@ -16,7 +17,7 @@ export async function getRecentReviews() {
   return json.results.list
 }
 
-export async function getAlbumsByArtist(artistSlug: string) {
+export async function getAlbumsByArtist(artistSlug: string): Promise<Album[]> {
   const response = await fetch(
     `${baseUrl}entities/artists/${artistSlug}/albumreviews/?size=200&start=0`
   )
@@ -24,7 +25,7 @@ export async function getAlbumsByArtist(artistSlug: string) {
   return json.results.list
 }
 
-export async function getAlbumsByGenre(genres: string[]): Promise<Array<any>> {
+export async function getAlbumsByGenre(genres: string[]): Promise<Album[]> {
   const query = genres
     .map((genre: string) => `genre=${genre.split("-")[0]}&`)
     .join("")
