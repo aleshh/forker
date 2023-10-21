@@ -1,5 +1,6 @@
 import Albums from "../../components/Albums"
 import Header from "../../components/Header"
+import { getAlbumsByArtist } from "../../api"
 
 function getArtistName(album: any, artistToFind: string) {
   const artist = album.artists.find(
@@ -13,11 +14,7 @@ export default async function Artist({
 }: {
   params: { artistSlug: string }
 }) {
-  const response = await fetch(
-    `https://pitchfork.com/api/v2/entities/artists/${artistSlug}/albumreviews/?size=200&start=0`
-  )
-  const json = await response.json()
-  const albums = json.results.list
+  const albums = await getAlbumsByArtist(artistSlug)
 
   const artistName = getArtistName(albums[0], artistSlug)
 
