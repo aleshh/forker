@@ -2,6 +2,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { FiShare, FiCopy } from "react-icons/fi"
+import { Button } from "@chakra-ui/react"
 import styles from "./Album.module.css"
 import { Album as AlbumType } from "../types"
 import copyToClipboard from "../utils/copyToClipboard"
@@ -82,7 +83,13 @@ export default function Album({
               </span>
             ))}
           </h3>
-          <h2 className={isHovered ? styles.nameUnderlined : styles.name}>
+          <h2
+            className={
+              isHovered
+                ? `${styles.name} ${styles.nameUnderlined}`
+                : styles.name
+            }
+          >
             <a href={albumUrl}>{name}</a>
           </h2>
           {showYear && (
@@ -114,16 +121,18 @@ export default function Album({
           ))}
         </div>
         <div className={styles.buttonContainer}>
-          <button
-            className={styles.button}
+          <Button
+            variant="ghost"
             onClick={() =>
               copyToClipboard(`${artists?.[0]?.display_name} ${name}`)
             }
           >
             <FiCopy />
-          </button>
-          <a className={styles.button} target="_blank" href={songWhipLink}>
-            <FiShare />
+          </Button>
+          <a href={songWhipLink} target="_blank">
+            <Button variant="ghost">
+              <FiShare />
+            </Button>
           </a>
         </div>
       </footer>
