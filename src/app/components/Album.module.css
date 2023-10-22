@@ -54,19 +54,17 @@
 
 .artist {
   font-size: 20px;
-  font-weight: 600;
-  line-height: 24px;
   margin-bottom: 3px;
 }
 
 .name {
-  font-size: 26px;
+  font-weight: normal;
   font-style: italic;
-  font-weight: 400;
-  line-height: 30px;
 }
 
 .nameUnderlined {
+  font-weight: normal;
+  font-style: italic;
   text-decoration: underline;
 }
 
@@ -95,6 +93,16 @@
 .buttonContainer {
   float: right;
   padding: 10px;
+}
+
+.button {
+  color: black;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 3px;
 }
 
 .button:hover {

@@ -12,10 +12,10 @@ export default function Albums({ albums }: { albums: AlbumType[] }) {
   const params = useParams()
   const showYear = isAlbumPage(params)
   return (
-    <main className={styles.albumContainer}>
+    <div className={styles.albumContainer}>
       {albums.map((album) => (
         <Album key={album.id} album={album} showYear={showYear} />
       ))}
-    </main>
+    </div>
   )
 }

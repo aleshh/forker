@@ -1,6 +1,9 @@
 import "./globals.css"
 import type { Metadata } from "next"
-import ChakraProviders from "./components/ChakraProviders"
+import { Inter } from "next/font/google"
+import Header from "./components/Header"
+
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "Forker",
@@ -19,8 +22,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <ChakraProviders>{children}</ChakraProviders>
+      <body className={inter.className}>
+        <main>{children}</main>
       </body>
     </html>
   )
