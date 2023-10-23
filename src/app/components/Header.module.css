@@ -1,4 +1,8 @@
 .wrapper {
   background-color: white;
-  padding: 20px 30px;
+  padding: 0 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
 }
