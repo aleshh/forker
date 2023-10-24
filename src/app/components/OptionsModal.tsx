@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState, ChangeEvent } from "react"
+// eslint-disable-next-line no-unused-vars
 import Button from "@mui/joy/Button"
 import Modal from "@mui/joy/Modal"
 import ModalClose from "@mui/joy/ModalClose"
@@ -29,7 +30,7 @@ function getInitialGenres(): Record<string, boolean> {
 function Genres() {
   const [selected, setSelected] = useState(getInitialGenres())
 
-  function handleChange(event: React.ChangeEvent) {
+  function handleChange(event: ChangeEvent) {
     const target = event.target as HTMLInputElement
     const { value, checked } = target
     const newSelection = { ...selected }

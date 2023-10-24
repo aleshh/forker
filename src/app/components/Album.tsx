@@ -12,7 +12,7 @@ function kebabCase(string: string | undefined): string {
   if (!string) return ""
   return string
     .toLowerCase()
-    .replace(/[.,\/#!$%\^&\*;:{}=\-_'’`~()]/g, "")
+    .replace(/[.,/#!$%^&*;:{}=\-_'’`~()]/g, "")
     .replace(/ ep$/, "")
     .replaceAll(" ", "-")
 }
