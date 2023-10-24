@@ -1,10 +1,11 @@
 import { getAlbumsByGenre } from "@/app/api"
 import Albums from "../../components/Albums"
 import Header from "../../components/Header"
+import { Album } from "../../types"
 
-function getGenreName({ genres }: { genres: any }, genreToFind: string) {
+function getGenreName({ genres }: Album, genreToFind: string): string {
   const genre = genres?.find((g: any) => g.slug === genreToFind)
-  return genre.display_name
+  return genre ? genre.display_name : ""
 }
 
 export default async function Genres({
