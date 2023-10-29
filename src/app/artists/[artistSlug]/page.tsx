@@ -20,7 +20,7 @@ export default async function Artist({
 
   return (
     <>
-      <Header text={`> Artist > ${artistName}`} />
+      <Header pageType="Artist" pageName={artistName} />
       <Albums albums={albums} />
     </>
   )

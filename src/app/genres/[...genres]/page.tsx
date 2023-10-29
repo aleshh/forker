@@ -19,7 +19,7 @@ export default async function Genres({
 
   return (
     <>
-      <Header text={`> Genre > ${genreName}`} />
+      <Header pageType="Genre" pageName={genreName} />
       <Albums albums={albums} />
     </>
   )

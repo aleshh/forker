@@ -6,3 +6,16 @@
   align-items: center;
   height: 50px;
 }
+
+.breadCrumbs {
+  flex-grow: 1;
+}
+
+.appName {
+  font-weight: 600;
+}
+
+.appNameWithBreadcrumbs {
+  composes: appName;
+  padding-right: 1em;
+}
