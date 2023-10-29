@@ -1,12 +1,11 @@
 import { useState, ChangeEvent } from "react"
+import styles from "./OptionsModal.module.css"
 // eslint-disable-next-line no-unused-vars
 import Button from "@mui/joy/Button"
 import Modal from "@mui/joy/Modal"
-import ModalClose from "@mui/joy/ModalClose"
 import Slider from "@mui/joy/Slider"
 import Sheet from "@mui/joy/Sheet"
 import Checkbox from "@mui/joy/Checkbox"
-import List from "@mui/joy/List"
 import ListItem from "@mui/joy/ListItem"
 
 // https://mui.com/joy-ui/react-slider/
@@ -39,10 +38,12 @@ function Genres() {
   }
 
   return (
-    <List>
+    <ul className={styles.checkboxContainer}>
       {Object.keys(genres).map((genre) => (
         <ListItem key={genre}>
           <Checkbox
+            className={styles.checkbox}
+            color="neutral"
             onChange={handleChange}
             label={genres[genre]}
             value={genre}
@@ -50,7 +51,7 @@ function Genres() {
           />
         </ListItem>
       ))}
-    </List>
+    </ul>
   )
 }
 
@@ -72,23 +73,16 @@ export default function OptionsModal() {
         aria-describedby="modal-desc"
         open={open}
         onClose={() => setOpen(false)}
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+        className={styles.modal}
       >
-        <Sheet
-          variant="outlined"
-          sx={{
-            maxWidth: 500,
-            borderRadius: "md",
-            p: 3,
-            boxShadow: "lg",
-          }}
-        >
-          <ModalClose variant="plain" sx={{ m: 1 }} />
+        <Sheet className={styles.dialog}>
+          <h3>Genres</h3>
           <Genres />
 
-          <div>
-            <div>Rating</div>
-            <div style={{ width: 200 }}>
+          <div className={styles.ratingWrapper}>
+            <h3>Rating</h3>
+
+            <div>
               <Slider
                 step={0.1}
                 value={rating}
@@ -101,6 +95,12 @@ export default function OptionsModal() {
               />
             </div>
             <div>{rating} – 10</div>
+          </div>
+          <div className={styles.buttonGroup}>
+            <Button color="neutral" variant="plain" className="button">
+              Cancel
+            </Button>
+            <Button color="neutral">Filter</Button>
           </div>
         </Sheet>
       </Modal>
