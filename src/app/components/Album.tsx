@@ -59,6 +59,7 @@ export default function Album({
     <article className={styles.album}>
       {albumImageUrl && (
         <a
+          tabIndex={-1}
           target="_blank"
           className={styles.imageWrapper}
           href={albumUrl}
