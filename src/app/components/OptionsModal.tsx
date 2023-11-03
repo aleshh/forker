@@ -27,6 +27,10 @@ const genres: Record<string, string> = {
   rock: "Rock",
 }
 
+const dev = process.env.NODE_ENV === "development"
+
+type GenreValues = Record<string, boolean>
+
 function getInitialGenres(): Record<string, boolean> {
   return Object.fromEntries(Object.keys(genres).map((genre) => [genre, true]))
 }
@@ -45,9 +49,20 @@ function createQueryString(
   return params.toString()
 }
 
+function areAnyGenresSelected(genreValues: GenreValues): boolean {
+  // todo: we should have a simple genres string array at the top level
+  const genres = Object.keys(genreValues)
+  return genres.findIndex((genre) => !!genreValues[genre]) !== -1
+}
+
+function areAllGenresSelected(genreValues: GenreValues): boolean {
+  const genres = Object.keys(genreValues)
+  return genres.findIndex((genre) => !genreValues[genre]) === -1
+}
+
 export default function OptionsModal() {
   const [open, setOpen] = useState<boolean>(false)
-  const [selectedGenres, setSelectedGenres] = useState<Record<string, boolean>>(
+  const [selectedGenres, setSelectedGenres] = useState<GenreValues>(
     getInitialGenres()
   )
   const [rating, setRating] = useState<number>(0)
@@ -55,22 +70,26 @@ export default function OptionsModal() {
   const searchParams = useSearchParams()
   const router = useRouter()
 
-  const getUrlParameters = useCallback(
-    function getUrlParameters() {
+  const getParametersFromUrl = useCallback(
+    function () {
       const minRating: number = Number(searchParams.get("minRating"))
       const urlGenres = searchParams.getAll("genre")
       const genreValues = Object.fromEntries(
         Object.keys(genres).map((genre) => [genre, urlGenres.includes(genre)])
       )
+      const nonNullGenreValues = areAnyGenresSelected(genreValues)
+        ? genreValues
+        : getInitialGenres()
+
       setRating(minRating)
-      setSelectedGenres(genreValues)
+      setSelectedGenres(nonNullGenreValues)
     },
     [searchParams]
   )
 
   useEffect(() => {
-    getUrlParameters()
-  }, [getUrlParameters])
+    getParametersFromUrl()
+  }, [getParametersFromUrl])
 
   function handleSetGenres(event: ChangeEvent) {
     const target = event.target as HTMLInputElement
@@ -85,14 +104,14 @@ export default function OptionsModal() {
   }
 
   function handleCancel() {
-    getUrlParameters()
+    getParametersFromUrl()
     setOpen(false)
   }
 
   function handleSubmit() {
-    const genres = Object.keys(selectedGenres).filter(
-      (genre) => selectedGenres[genre]
-    )
+    const genres = areAllGenresSelected(selectedGenres)
+      ? []
+      : Object.keys(selectedGenres).filter((genre) => selectedGenres[genre])
 
     router.replace(
       pathname + "?" + createQueryString(searchParams, genres, rating)
@@ -102,9 +121,11 @@ export default function OptionsModal() {
 
   return (
     <>
-      {/* <Button variant="plain" color="neutral" onClick={() => setOpen(true)}>
-        Menu
-      </Button> */}
+      {dev && (
+        <Button variant="plain" color="neutral" onClick={() => setOpen(true)}>
+          Menu
+        </Button>
+      )}
       <Modal
         aria-labelledby="modal-title"
         aria-describedby="modal-desc"
@@ -155,7 +176,11 @@ export default function OptionsModal() {
             >
               Cancel
             </Button>
-            <Button onClick={handleSubmit} color="neutral">
+            <Button
+              disabled={!areAnyGenresSelected(selectedGenres)}
+              onClick={handleSubmit}
+              color="neutral"
+            >
               Filter
             </Button>
           </div>
