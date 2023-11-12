@@ -5,6 +5,7 @@ import { FiShare, FiCopy } from "react-icons/fi"
 import styles from "./Album.module.css"
 import { Album as AlbumType } from "../types"
 import copyToClipboard from "../utils/copyToClipboard"
+import useSearchParamsString from "../utils/useSearchParamsString"
 
 const baseUrl = "https://pitchfork.com"
 
@@ -32,6 +33,7 @@ export default function Album({
   showYear: boolean
 }) {
   const [isHovered, setHovered] = useState(false)
+  const searchParamsString = useSearchParamsString()
   const { tombstone, genres: genresEntity, url } = input
   const { albums, bnm, bnr } = tombstone
   const { album, rating: rtg, labels_and_years } = albums?.[0] || {}
@@ -62,7 +64,7 @@ export default function Album({
           tabIndex={-1}
           target="_blank"
           className={styles.imageWrapper}
-          href={albumUrl}
+          href={albumUrl + searchParamsString}
           onMouseEnter={() => setHovered(true)}
           onMouseLeave={() => setHovered(false)}
         >
@@ -78,13 +80,15 @@ export default function Album({
           <h3 className={styles.artist}>
             {artists?.map((artist, index, array) => (
               <span key={artist.id}>
-                <a href={artist.url}>{artist.display_name}</a>
+                <a href={artist.url + searchParamsString}>
+                  {artist.display_name}
+                </a>
                 {array.length - 1 !== index && " · "}
               </span>
             ))}
           </h3>
           <h2 className={isHovered ? styles.nameUnderlined : styles.name}>
-            <a href={albumUrl}>{name}</a>
+            <a href={albumUrl + searchParamsString}>{name}</a>
           </h2>
           {showYear && (
             <div>

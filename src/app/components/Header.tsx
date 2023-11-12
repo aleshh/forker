@@ -1,4 +1,5 @@
 "use client"
+import useSearchParamsString from "../utils/useSearchParamsString"
 import styles from "./Header.module.css"
 import OptionsModal from "./OptionsModal"
 
@@ -9,6 +10,7 @@ export default function Header({
   pageType?: string
   pageName?: string
 }) {
+  const searchParamsString = useSearchParamsString()
   const showBreadcrumbs = !!(pageType && pageName)
 
   const titleClass = showBreadcrumbs
@@ -18,7 +20,7 @@ export default function Header({
   return (
     <nav className={styles.wrapper}>
       <div className={styles.breadCrumbs}>
-        <a href="/" className={titleClass}>
+        <a href={`/${searchParamsString}`} className={titleClass}>
           Forker
         </a>
         {showBreadcrumbs && `${pageType} → ${pageName}`}

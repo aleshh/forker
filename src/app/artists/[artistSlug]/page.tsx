@@ -4,6 +4,8 @@ import { getAlbumsByArtist } from "../../api"
 import { SearchParams } from "../../types"
 
 function getArtistName(album: any, artistToFind: string) {
+  if (!album?.artists) return ""
+
   const artist = album.artists.find(
     (a: any) => a.url === `/artists/${artistToFind}/`
   )
