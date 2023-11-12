@@ -1,6 +1,8 @@
 "use client"
 import { useCallback, useEffect, useState, ChangeEvent } from "react"
 import { usePathname, useSearchParams, useRouter } from "next/navigation"
+import { IoFilterSharp } from "react-icons/io5"
+
 import styles from "./OptionsModal.module.css"
 // eslint-disable-next-line no-unused-vars
 import Button from "@mui/joy/Button"
@@ -10,8 +12,6 @@ import Sheet from "@mui/joy/Sheet"
 import Checkbox from "@mui/joy/Checkbox"
 import ListItem from "@mui/joy/ListItem"
 import { genres, Genre, GenreValues, GenreNames } from "../types"
-
-const dev = process.env.NODE_ENV === "development"
 
 // todo: sort out types in this file: remove `as` and ts-ignore
 
@@ -102,11 +102,9 @@ export default function OptionsModal() {
 
   return (
     <>
-      {dev && (
-        <Button variant="plain" color="neutral" onClick={() => setOpen(true)}>
-          Menu
-        </Button>
-      )}
+      <Button variant="plain" color="neutral" onClick={() => setOpen(true)}>
+        <IoFilterSharp />
+      </Button>
       <Modal
         aria-labelledby="modal-title"
         aria-describedby="modal-desc"
