@@ -1,11 +1,6 @@
 "use client"
 import { useCallback, useEffect, useState, ChangeEvent } from "react"
-import {
-  usePathname,
-  useSearchParams,
-  useRouter,
-  ReadonlyURLSearchParams,
-} from "next/navigation"
+import { usePathname, useSearchParams, useRouter } from "next/navigation"
 import styles from "./OptionsModal.module.css"
 // eslint-disable-next-line no-unused-vars
 import Button from "@mui/joy/Button"
@@ -14,32 +9,18 @@ import Slider from "@mui/joy/Slider"
 import Sheet from "@mui/joy/Sheet"
 import Checkbox from "@mui/joy/Checkbox"
 import ListItem from "@mui/joy/ListItem"
-
-const genres: Record<string, string> = {
-  electronic: "Electronic",
-  experimental: "Experimental",
-  folk: "Folk/Country",
-  global: "Global",
-  jazz: "Jazz",
-  metal: "Metal",
-  pop: "Pop/R&B",
-  rap: "Rap/Hip-Hop",
-  rock: "Rock",
-}
+import { genres, Genre, GenreValues, GenreNames } from "../types"
 
 const dev = process.env.NODE_ENV === "development"
 
-type GenreValues = Record<string, boolean>
+// todo: sort out types in this file: remove `as` and ts-ignore
 
-function getInitialGenres(): Record<string, boolean> {
-  return Object.fromEntries(Object.keys(genres).map((genre) => [genre, true]))
+function getInitialGenres(): GenreValues {
+  return Object.fromEntries(genres.map((genre) => [genre, true])) as GenreValues
 }
 
-function createQueryString(
-  searchParams: ReadonlyURLSearchParams,
-  genres: string[],
-  minRating: number
-) {
+// todo: make this generic, put in utils, and use also in api calls
+function createQueryString(genres: string[], minRating: number) {
   const params = new URLSearchParams()
   genres.forEach((genre) => {
     params.append("genre", genre)
@@ -50,13 +31,10 @@ function createQueryString(
 }
 
 function areAnyGenresSelected(genreValues: GenreValues): boolean {
-  // todo: we should have a simple genres string array at the top level
-  const genres = Object.keys(genreValues)
   return genres.findIndex((genre) => !!genreValues[genre]) !== -1
 }
 
 function areAllGenresSelected(genreValues: GenreValues): boolean {
-  const genres = Object.keys(genreValues)
   return genres.findIndex((genre) => !genreValues[genre]) === -1
 }
 
@@ -74,9 +52,12 @@ export default function OptionsModal() {
     function () {
       const minRating: number = Number(searchParams.get("minRating"))
       const urlGenres = searchParams.getAll("genre")
-      const genreValues = Object.fromEntries(
-        Object.keys(genres).map((genre) => [genre, urlGenres.includes(genre)])
-      )
+      const genreValues: GenreValues = Object.fromEntries(
+        Object.keys(GenreNames).map((genre) => [
+          genre,
+          urlGenres.includes(genre),
+        ])
+      ) as GenreValues
       const nonNullGenreValues = areAnyGenresSelected(genreValues)
         ? genreValues
         : getInitialGenres()
@@ -95,6 +76,7 @@ export default function OptionsModal() {
     const target = event.target as HTMLInputElement
     const { value, checked } = target
     const newSelection = { ...selectedGenres }
+    //@ts-ignore
     newSelection[value] = checked
     setSelectedGenres(newSelection)
   }
@@ -111,11 +93,10 @@ export default function OptionsModal() {
   function handleSubmit() {
     const genres = areAllGenresSelected(selectedGenres)
       ? []
-      : Object.keys(selectedGenres).filter((genre) => selectedGenres[genre])
+      : //@ts-ignore
+        Object.keys(selectedGenres).filter((genre) => selectedGenres[genre])
 
-    router.replace(
-      pathname + "?" + createQueryString(searchParams, genres, rating)
-    )
+    router.replace(pathname + "?" + createQueryString(genres, rating))
     setOpen(false)
   }
 
@@ -136,15 +117,15 @@ export default function OptionsModal() {
         <Sheet className={styles.dialog}>
           <h3>Genres</h3>
           <ul className={styles.checkboxContainer}>
-            {Object.keys(genres).map((genre) => (
+            {Object.keys(GenreNames).map((genre) => (
               <ListItem key={genre}>
                 <Checkbox
                   className={styles.checkbox}
                   color="neutral"
                   onChange={handleSetGenres}
-                  label={genres[genre]}
+                  label={GenreNames[genre as Genre]}
                   value={genre}
-                  checked={selectedGenres[genre]}
+                  checked={selectedGenres[genre as Genre]}
                 />
               </ListItem>
             ))}

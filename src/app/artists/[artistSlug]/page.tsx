@@ -1,6 +1,7 @@
 import Albums from "../../components/Albums"
 import Header from "../../components/Header"
 import { getAlbumsByArtist } from "../../api"
+import { SearchParams } from "../../types"
 
 function getArtistName(album: any, artistToFind: string) {
   const artist = album.artists.find(
@@ -11,10 +12,12 @@ function getArtistName(album: any, artistToFind: string) {
 
 export default async function Artist({
   params: { artistSlug },
+  searchParams,
 }: {
   params: { artistSlug: string }
+  searchParams: SearchParams
 }) {
-  const albums = await getAlbumsByArtist(artistSlug)
+  const albums = await getAlbumsByArtist(artistSlug, searchParams)
 
   const artistName = getArtistName(albums[0], artistSlug)
 

@@ -1,3 +1,35 @@
+export const genres = [
+  "electronic",
+  "experimental",
+  "folk",
+  "global",
+  "jazz",
+  "metal",
+  "pop",
+  "rap",
+  "rock",
+] as const
+
+export type Genre = (typeof genres)[number]
+
+export type GenreValues = Record<Genre, boolean>
+
+export const GenreNames: Record<Genre, string> = {
+  electronic: "Electronic",
+  experimental: "Experimental",
+  folk: "Folk/Country",
+  global: "Global",
+  jazz: "Jazz",
+  metal: "Metal",
+  pop: "Pop/R&B",
+  rap: "Rap/Hip-Hop",
+  rock: "Rock",
+}
+export type SearchParams = {
+  genre: Genre[]
+  minRating: string
+}
+
 export interface Album {
   tombstone: Tombstone
   artists?: ArtistsEntity[] | null
