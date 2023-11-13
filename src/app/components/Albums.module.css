@@ -1,8 +1,6 @@
 .albumContainer {
-  background-color: rgb(236, 236, 236);
   padding: 30px;
   display: grid;
   gap: 30px;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  justify-items: stretch;
 }
