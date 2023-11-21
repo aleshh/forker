@@ -4,20 +4,19 @@ import Image from "next/image"
 import { FiShare, FiCopy } from "react-icons/fi"
 import styles from "./Album.module.css"
 import { Album as AlbumType } from "../types"
-import OpenButton from "./OpenButton"
 import copyToClipboard from "../utils/copyToClipboard"
 import useSearchParamsString from "../utils/useSearchParamsString"
 
 const baseUrl = "https://pitchfork.com"
 
-// function kebabCase(string: string | undefined): string {
-//   if (!string) return ""
-//   return string
-//     .toLowerCase()
-//     .replace(/[.,/#!$%^&*;:{}=\-_'’`~()]/g, "")
-//     .replace(/ ep$/, "")
-//     .replaceAll(" ", "-")
-// }
+function kebabCase(string: string | undefined): string {
+  if (!string) return ""
+  return string
+    .toLowerCase()
+    .replace(/[.,/#!$%^&*;:{}=\-_'’`~()]/g, "")
+    .replace(/ ep$/, "")
+    .replaceAll(" ", "-")
+}
 
 function getGenreUrl(genre: string): string {
   const lowercase = genre.toLowerCase().replaceAll("/", "-")
@@ -45,9 +44,18 @@ export default function Album({
   const albumImageUrl = album?.photos.tout.sizes.homepageLarge
   const isBest = bnm || bnr
   const albumUrl = baseUrl + url
-  // const songWhipLink = `https://songwhip.com/${kebabCase(
-  //   artists?.[0]?.display_name
-  // )}/${kebabCase(name)}`
+  const songWhipLink = `https://songwhip.com/${kebabCase(
+    artists?.[0]?.display_name
+  )}/${kebabCase(name)}`
+
+  // async function openInSpotify() {
+  //   const response = await fetch(
+  //     `https://songwhip.com/api/songwhip/search?q=${artists?.[0]} ${name}&country=US&limit=1`
+  //   )
+  //   const json = await response.json()
+  //   const album = json.results.albums[0].sourceUrl
+  //   console.log(album)
+  // }
 
   return (
     <article className={styles.album}>
@@ -119,13 +127,9 @@ export default function Album({
           >
             <FiCopy />
           </button>
-
-          <OpenButton searchText="hello">
+          <a className={styles.button} target="_blank" href={songWhipLink}>
             <FiShare />
-          </OpenButton>
-          {/* <a className={styles.button} target="_blank" href={songWhipLink}>
-            <FiShare />
-          </a> */}
+          </a>
         </div>
       </footer>
     </article>

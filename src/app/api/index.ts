@@ -40,7 +40,7 @@ export async function getRecentReviews(
   const queryString = createQueryString(genre, minRating)
 
   return await pitchforkFetch(
-    `search/?types=reviews&hierarchy=sections%2Freviews%2Falbums%2Cchannels%2Freviews%2Falbums&sort=publishdate%20desc%2Cposition%20asc&size=3&start=0&${queryString}`
+    `search/?types=reviews&hierarchy=sections%2Freviews%2Falbums%2Cchannels%2Freviews%2Falbums&sort=publishdate%20desc%2Cposition%20asc&size=200&start=0&${queryString}`
   )
 }
 
