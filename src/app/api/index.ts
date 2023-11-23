@@ -8,13 +8,17 @@ import { SearchParams } from "../types"
 
 const baseUrl = "https://pitchfork.com/api/v2/"
 
-function createQueryString(genres: string[], minRating: string) {
+function createQueryString(genres: string | string[], minRating: string) {
   const params = new URLSearchParams()
 
-  if (genres) {
+  console.log(genres)
+
+  if (Array.isArray(genres)) {
     genres.forEach((genre) => {
       params.append("genre", genre)
     })
+  } else {
+    params.set("genre", genres)
   }
   if (minRating) {
     params.set("rating_from", minRating.toString())
