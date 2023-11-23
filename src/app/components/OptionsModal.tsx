@@ -44,7 +44,7 @@ function areAllGenresSelected(genreValues: GenreValues): boolean {
 }
 
 export default function OptionsModal() {
-  const [open, setOpen] = useState<boolean>(true)
+  const [open, setOpen] = useState<boolean>(false)
   const [selectedGenres, setSelectedGenres] = useState<GenreValues>(
     getAllGenresSelected()
   )
