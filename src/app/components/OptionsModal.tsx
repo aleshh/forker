@@ -2,9 +2,7 @@
 import { useCallback, useEffect, useState, ChangeEvent } from "react"
 import { usePathname, useSearchParams, useRouter } from "next/navigation"
 import { IoFilterSharp } from "react-icons/io5"
-
 import styles from "./OptionsModal.module.css"
-// eslint-disable-next-line no-unused-vars
 import Button from "@mui/joy/Button"
 import Modal from "@mui/joy/Modal"
 import Slider from "@mui/joy/Slider"
@@ -15,9 +13,7 @@ import { genres, Genre, GenreValues, GenreNames } from "../types"
 
 // todo: sort out types in this file: remove `as` and ts-ignore
 
-function getInitialGenres(): GenreValues {
-  return Object.fromEntries(genres.map((genre) => [genre, true])) as GenreValues
-}
+const bottomPadding = { marginBottom: 16 }
 
 // todo: make this generic, put in utils, and use also in api calls
 function createQueryString(genres: string[], minRating: number) {
@@ -30,6 +26,15 @@ function createQueryString(genres: string[], minRating: number) {
   return params.toString()
 }
 
+function getAllGenresSelected(): GenreValues {
+  return Object.fromEntries(genres.map((genre) => [genre, true])) as GenreValues
+}
+function getNoGenresSelected(): GenreValues {
+  return Object.fromEntries(
+    genres.map((genre) => [genre, false])
+  ) as GenreValues
+}
+
 function areAnyGenresSelected(genreValues: GenreValues): boolean {
   return genres.findIndex((genre) => !!genreValues[genre]) !== -1
 }
@@ -39,9 +44,9 @@ function areAllGenresSelected(genreValues: GenreValues): boolean {
 }
 
 export default function OptionsModal() {
-  const [open, setOpen] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(true)
   const [selectedGenres, setSelectedGenres] = useState<GenreValues>(
-    getInitialGenres()
+    getAllGenresSelected()
   )
   const [rating, setRating] = useState<number>(0)
   const pathname = usePathname()
@@ -60,7 +65,7 @@ export default function OptionsModal() {
       ) as GenreValues
       const nonNullGenreValues = areAnyGenresSelected(genreValues)
         ? genreValues
-        : getInitialGenres()
+        : getAllGenresSelected()
 
       setRating(minRating)
       setSelectedGenres(nonNullGenreValues)
@@ -71,6 +76,14 @@ export default function OptionsModal() {
   useEffect(() => {
     getParametersFromUrl()
   }, [getParametersFromUrl])
+
+  function handleSelectAll() {
+    if (areAllGenresSelected(selectedGenres)) {
+      setSelectedGenres(getNoGenresSelected())
+    } else {
+      setSelectedGenres(getAllGenresSelected())
+    }
+  }
 
   function handleSetGenres(event: ChangeEvent) {
     const target = event.target as HTMLInputElement
@@ -113,7 +126,17 @@ export default function OptionsModal() {
         className={styles.modal}
       >
         <Sheet className={styles.dialog}>
-          <h3>Genres</h3>
+          <h3 style={bottomPadding}>Genres</h3>
+          <Checkbox
+            checked={areAllGenresSelected(selectedGenres)}
+            indeterminate={
+              !areAllGenresSelected(selectedGenres) &&
+              areAnyGenresSelected(selectedGenres)
+            }
+            label="Select all"
+            onChange={handleSelectAll}
+            style={bottomPadding}
+          />
           <ul className={styles.checkboxContainer}>
             {Object.keys(GenreNames).map((genre) => (
               <ListItem key={genre}>
@@ -158,7 +181,6 @@ export default function OptionsModal() {
             <Button
               disabled={!areAnyGenresSelected(selectedGenres)}
               onClick={handleSubmit}
-              color="neutral"
             >
               Filter
             </Button>
