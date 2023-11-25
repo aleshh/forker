@@ -17,7 +17,7 @@ function createQueryString(genres: string | string[], minRating: string) {
     genres.forEach((genre) => {
       params.append("genre", genre)
     })
-  } else {
+  } else if (genres) {
     params.set("genre", genres)
   }
   if (minRating) {
