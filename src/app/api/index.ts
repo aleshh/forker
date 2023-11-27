@@ -11,8 +11,6 @@ const baseUrl = "https://pitchfork.com/api/v2/"
 function createQueryString(genres: string | string[], minRating: string) {
   const params = new URLSearchParams()
 
-  console.log(genres)
-
   if (Array.isArray(genres)) {
     genres.forEach((genre) => {
       params.append("genre", genre)
@@ -74,4 +72,11 @@ export async function getAlbumsByGenre(
   return await pitchforkFetch(
     `search/?${query}types=reviews&hierarchy=sections/reviews/albums,channels/reviews/albums&sort=publishdate desc,position asc&size=200&start=0&${queryString}`
   )
+}
+
+export async function getSearchResults(searchValue: string) {
+  const url = `${baseUrl}search/faceted/?query=${searchValue}`
+  const response = await fetch(url, { cache: "no-store" })
+  const json = await response.json()
+  return json.results.artists.items
 }

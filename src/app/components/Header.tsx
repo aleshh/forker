@@ -1,6 +1,7 @@
 "use client"
 import useSearchParamsString from "../utils/useSearchParamsString"
 import styles from "./Header.module.css"
+import Search from "./Search"
 import OptionsModal from "./OptionsModal"
 
 export default function Header({
@@ -25,6 +26,7 @@ export default function Header({
         </a>
         {showBreadcrumbs && `${pageType} → ${pageName}`}
       </div>
+      <Search />
       <OptionsModal />
     </nav>
   )
