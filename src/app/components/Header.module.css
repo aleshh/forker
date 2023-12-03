@@ -1,5 +1,5 @@
 .wrapper {
-  background-color: white;
+  background-color: var(--card-color);
   padding: 0 30px;
   display: flex;
   justify-content: space-between;

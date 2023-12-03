@@ -1,12 +1,58 @@
+:root {
+  /* light mode */
+  --light-body-bg-color: rgb(236, 236, 236);
+  --light-card-color: rgb(255, 255, 255);
+  --light-text-color: rgb(28, 28, 28);
+
+  --light-pill-bg-color: rgb(28, 28, 28);
+  --light-pill-text-color: rgb(255, 255, 255);
+
+  --light-button-bg-hover: rgb(209, 209, 209);
+
+  /* dark mode */
+  --dark-body-bg-color: rgb(0, 0, 0);
+  --dark-card-color: rgb(30, 30, 30);
+  --dark-text-color: rgb(188, 188, 188);
+
+  --dark-pill-bg-color: rgb(59, 59, 59);
+  --dark-pill-text-color: var(--dark-text-color);
+
+  --dark-button-bg-hover: rgb(42, 42, 42);
+
+  /* default color specifications */
+  --body-bg-color: var(--light-body-bg-color);
+  --card-color: var(--light-card-color);
+  --text-color: var(--light-text-color);
+
+  --pill-bg-color: var(--light-pill-bg-color);
+  --pill-text-color: var(--light-pill-text-color);
+
+  --button-bg-hover: var(var(--light-button-bg-hover));
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* dark mode overrides */
+    --body-bg-color: var(--dark-body-bg-color);
+    --card-color: var(--dark-card-color);
+    --text-color: var(--dark-text-color);
+
+    --pill-bg-color: var(--dark-pill-bg-color);
+    --pill-text-color: var(--dark-pill-text-color);
+
+    --button-bg-hover: var(--dark-button-bg-hover);
+  }
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
   font-family: Optima, Candara, "Noto Sans", source-sans-pro, sans-serif;
+  color: var(--text-color);
 }
 
 a {
-  color: black;
+  color: var(--text-color);
   text-decoration: none;
 }
 
@@ -15,5 +61,5 @@ a:hover {
 }
 
 body {
-  background-color: rgb(236, 236, 236);
+  background-color: var(--body-bg-color);
 }
