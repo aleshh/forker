@@ -116,7 +116,7 @@ export default function OptionsModal() {
 
   return (
     <>
-      <Button variant="plain" color="neutral" onClick={() => setOpen(true)}>
+      <Button onClick={() => setOpen(true)}>
         <IoFilterSharp />
       </Button>
       <Modal

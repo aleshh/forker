@@ -36,7 +36,7 @@ export default function Search() {
 
   return (
     <>
-      <Button variant="plain" color="neutral" onClick={handleOpen}>
+      <Button onClick={handleOpen}>
         <IoSearch />
       </Button>
       <Modal
