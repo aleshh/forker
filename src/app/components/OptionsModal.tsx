@@ -3,13 +3,14 @@ import { useCallback, useEffect, useState, ChangeEvent } from "react"
 import { usePathname, useSearchParams, useRouter } from "next/navigation"
 import { IoFilterSharp } from "react-icons/io5"
 import styles from "./OptionsModal.module.css"
-import Button from "@mui/joy/Button"
+import JoyButton from "@mui/joy/Button"
 import Modal from "@mui/joy/Modal"
 import Slider from "@mui/joy/Slider"
 import Sheet from "@mui/joy/Sheet"
 import Checkbox from "@mui/joy/Checkbox"
 import ListItem from "@mui/joy/ListItem"
 import { genres, Genre, GenreValues, GenreNames } from "../types"
+import Button from "./Button"
 
 // todo: sort out types in this file: remove `as` and ts-ignore
 
@@ -170,20 +171,20 @@ export default function OptionsModal() {
           </div>
 
           <div className={styles.buttonGroup}>
-            <Button
+            <JoyButton
               onClick={handleCancel}
               color="neutral"
               variant="plain"
               className="button"
             >
               Cancel
-            </Button>
-            <Button
+            </JoyButton>
+            <JoyButton
               disabled={!areAnyGenresSelected(selectedGenres)}
               onClick={handleSubmit}
             >
               Filter
-            </Button>
+            </JoyButton>
           </div>
         </Sheet>
       </Modal>

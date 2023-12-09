@@ -94,19 +94,3 @@
   float: right;
   padding: 10px;
 }
-
-.button {
-  color: var(--text-color);
-  background: none;
-  border: none;
-  font-size: 1rem;
-  text-decoration: none;
-  padding: 10px 20px;
-  border-radius: 3px;
-}
-
-.button:hover {
-  text-decoration: none;
-  cursor: pointer;
-  background-color: var(--button-bg-hover);
-}

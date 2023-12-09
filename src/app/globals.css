@@ -7,7 +7,7 @@
   --light-pill-bg-color: rgb(28, 28, 28);
   --light-pill-text-color: rgb(255, 255, 255);
 
-  --light-button-bg-hover: rgb(209, 209, 209);
+  --light-button-bg-hover: rgb(241, 241, 241);
 
   /* dark mode */
   --dark-body-bg-color: rgb(0, 0, 0);
@@ -27,7 +27,7 @@
   --pill-bg-color: var(--light-pill-bg-color);
   --pill-text-color: var(--light-pill-text-color);
 
-  --button-bg-hover: var(var(--light-button-bg-hover));
+  --button-bg-hover: var(--light-button-bg-hover);
 }
 @media (prefers-color-scheme: dark) {
   :root {

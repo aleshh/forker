@@ -3,10 +3,10 @@ import { useState, useRef, SyntheticEvent } from "react"
 import { useRouter } from "next/navigation"
 import { IoSearch } from "react-icons/io5"
 import styles from "./OptionsModal.module.css"
-import Button from "@mui/joy/Button"
 import Modal from "@mui/joy/Modal"
 import Sheet from "@mui/joy/Sheet"
 import Input from "@mui/joy/Input"
+import Button from "./Button"
 
 export default function Search() {
   const [open, setOpen] = useState<boolean>(false)
