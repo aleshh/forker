@@ -40,7 +40,7 @@ export default function Album({
   const albumUrl = baseUrl + url
 
   async function openInSpotify() {
-    const newWindow = window.open()
+    const newWindow = window.open("", "_blank")
 
     const spotifyUrl = await getButtonLink(
       `${artists?.[0].display_name} ${name}`
